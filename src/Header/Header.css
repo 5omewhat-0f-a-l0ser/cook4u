@@ -1,7 +1,13 @@
-.header__logo{
-    background-color: #B11313;
+.header {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
 }
 
-.header__recipe-btn{
+.header__logo {
+    padding: 0;
+}
+
+.header__recipe-btn {
     background-color: #13B113;
 }

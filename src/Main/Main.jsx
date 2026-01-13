@@ -1,4 +1,6 @@
 import './Main.css';  
+import '../Card/RecipeCard';
+import RecipeCard from '../Card/RecipeCard';
 
 function Main() {
     return (
@@ -9,7 +11,7 @@ function Main() {
                 </p>
             </section> 
             <ul className="cards__list">
-                {/* Recipe cards will be dynamically inserted here */}
+                <RecipeCard/>
             </ul>
         </main>
     )
