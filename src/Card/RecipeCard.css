@@ -1,0 +1,49 @@
+.card {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  width: 323px;
+  height: 326px;
+  position: relative;
+  /*gap: 20px; had to comment this out due to my display adding 20 extra pixels, which caused my cards to pop out of their borders... Yeah, weird*/
+
+  display: flex; /* Enables flexbox */
+  flex-direction: column; /* Stacks children (image + title) */
+  align-items: center; /* Centers the title horizontally */
+}
+
+.card:hover {
+  cursor: pointer;
+}
+
+.card__name_container {
+  display: flex;
+  justify-content: center;
+}
+
+.card__name {
+  position: absolute;
+  top: 15px;
+  background-color: #ffffff;
+  padding: 2px 12px;
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.card__like{
+  position: absolute;
+  top: 38px;
+  margin-left: 130px;
+  background: transparent;
+  background-image: url("../images/like_uncheck.png");
+  background-size: cover;
+  border-style: none;
+  width: 20px;
+  height: 17px;
+}
