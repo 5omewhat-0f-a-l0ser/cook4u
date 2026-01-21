@@ -4,6 +4,9 @@ import Footer from '../Footer/Footer'
 
 import Navbar from '../Navbar/Navbar'
 
+import CreateRecipeModal from '../CreateRecipeModal/CreateModal'
+
+
 import './App.css'
 
 function App() {
@@ -15,6 +18,8 @@ function App() {
         <Navbar/>
         <Main/>
         <Footer/> 
+
+        <CreateRecipeModal/>
       </div>
     </div>
   )
