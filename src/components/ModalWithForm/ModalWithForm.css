@@ -77,6 +77,11 @@
   width: 100%;
   box-sizing: border-box;
 }
+
+.modal__input_type_description {
+  height: 300px;
+  resize: vertical;
+}
 .modal__submit {
   background-color: #2b3784;
   color: #fff;

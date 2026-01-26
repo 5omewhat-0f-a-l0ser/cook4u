@@ -1,11 +1,11 @@
 .navbar {
     background-color: #b11313;
-    height: 45px;
+    height: 55px;
     max-width: 1360px;
 }
 .navbar__links{
     margin: 0;
-    padding: 5px 0 0;
+    padding:0;
     font-size: 1.2rem;
     color: #000;
     text-decoration: none;
@@ -22,6 +22,11 @@
     color: #fff;
     cursor: pointer;
 }       
+
+.navbar__item:active {
+    background-color: #2b3784;
+    color: #fff;
+}
 
 @media screen and (max-width: 600px) {
     .navbar {
