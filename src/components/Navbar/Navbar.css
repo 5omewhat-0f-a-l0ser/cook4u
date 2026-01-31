@@ -18,6 +18,17 @@
     list-style-type: none;
 }
 
+.navbar__link {
+  text-decoration: none;  
+  color: #000;            
+  font: inherit;           
+  line-height: 1;          
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding: 10px;
+}
+
 .navbar__item:hover {
     color: #fff;
     cursor: pointer;

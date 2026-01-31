@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
 
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -10,10 +11,22 @@ import CreateRecipeModal from "../CreateRecipeModal/CreateModal";
 import "./App.css";
 
 function App() {
+  const [activeModal, setActiveModal] = useState("");
+  //const [selectedCard, setSelectedCard] = useState();
+
+  const closeActiveModal = () => {
+    setActiveModal("");
+  }
+
+  const onAddRecipe = () => {
+    setActiveModal("create-recipe");
+  }
   return (
     <div className="page">
       <Header />
-      <Navbar />
+      <Navbar
+        onAddRecipe={onAddRecipe}
+      />
 
       {/* This is the part that changes by route */}
       <Routes>
@@ -22,7 +35,14 @@ function App() {
       </Routes>
 
       <Footer />
-      <CreateRecipeModal />
+      <CreateRecipeModal 
+        activeModal={activeModal} 
+        closeActiveModal={closeActiveModal}
+        buttonText={"Add Recipe"}
+        title={"Create a Recipe"}
+        isOpen={activeModal === "create-recipe"}
+        //isSubmitting={isSubmitting}
+      />
     </div>
   );
 }

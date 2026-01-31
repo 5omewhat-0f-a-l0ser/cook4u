@@ -1,16 +1,45 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./Navbar.css";
 
-function Navbar() {
-    return(
-        <nav className="navbar">
-            <ul className="navbar__links">
-                <li className="navbar__item">Home</li>
-                <li className="navbar__item">Recipes</li>
-                <li className="navbar__item">Search</li>
-                <li className="navbar__item">Contact</li>
+function Navbar({ onAddRecipe }) {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  return (
+    <nav className="navbar">
+      <ul className="navbar__links">
+        <Link to="/" className="navbar__link">
+          <li className="navbar__item">Home</li>
+        </Link>
+
+        {/* Recipes dropdown */}
+        <li
+          className="navbar__item"
+          onMouseEnter={() => setIsDropdownOpen(true)}
+          onMouseLeave={() => setIsDropdownOpen(false)}
+        >
+          Recipes
+          {isDropdownOpen && (
+            <ul className="dropdown">
+              <li>
+                <Link to="/my-recipes">My Recipes</Link>
+              </li>
+              <li>
+                <Link to="/favorites">Favorites</Link>
+              </li>
+              <li onClick={onAddRecipe}>Add Recipe</li>
             </ul>
-        </nav>
-    )
+          )}
+        </li>
+
+        <li className="navbar__item">Search</li>
+
+        <Link to="/contact" className="navbar__link">
+          <li className="navbar__item">Contact</li>
+        </Link>
+      </ul>
+    </nav>
+  );
 }
 
 export default Navbar;
