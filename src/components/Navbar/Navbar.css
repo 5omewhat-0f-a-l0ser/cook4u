@@ -39,6 +39,19 @@
     color: #fff;
 }
 
+.dropdown{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown__item {
+    padding: 10px;
+    background-color: #b11313;
+    color: #000;
+    text-decoration: none;
+}
+
 @media screen and (max-width: 600px) {
     .navbar {
         height: auto;
