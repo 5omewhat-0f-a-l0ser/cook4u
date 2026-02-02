@@ -26,7 +26,6 @@
   display: flex;
   align-items: center;
   list-style: none;
-  padding: 10px;
 }
 
 .navbar__item:hover {
@@ -41,15 +40,40 @@
 
 .dropdown{
     position: relative;
+}
+
+.dropdown:hover .dropdown__menu {
     display: flex;
+}
+
+.dropdown__menu {
+    position: absolute;
+    top: 90%;
+    left: 0;
+    display: none;
     flex-direction: column;
+    background-color: #b11313;
+    min-width: 180px;
+    z-index: 9999;
+    gap: 13px;
+    border: 2px solid #000;
+    border-radius: 11px;
+    list-style: none;
+    padding: 0 10px 0;
 }
 
 .dropdown__item {
-    padding: 10px;
+    padding: 0;
     background-color: #b11313;
     color: #000;
     text-decoration: none;
+    white-space: nowrap;
+    background: border-box;
+}
+
+.dropdown__item:hover {
+    background-color: #2b3784;
+    color: #fff;
 }
 
 @media screen and (max-width: 600px) {

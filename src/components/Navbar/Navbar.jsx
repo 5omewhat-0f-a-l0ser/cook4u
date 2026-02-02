@@ -14,27 +14,24 @@ function Navbar({ onAddRecipe }) {
 
         {/* Recipes dropdown */}
         <li
-          className="navbar__item"
+          className="navbar__item dropdown"
           onMouseEnter={() => setIsDropdownOpen(true)}
           onMouseLeave={() => setIsDropdownOpen(false)}
           onClick={() => setIsDropdownOpen(prev => !prev)}
         >
           Recipes
           {isDropdownOpen && (
-            <ul className="dropdown">
+            <ul className="dropdown__menu">
               <li>
                 <Link to="/my-recipes" className="dropdown__item">My Recipes</Link>
               </li>
               <li>
-                <Link to="/favorites" className="dropdown__item">Favorites</Link>
+                <Link to="/search" className="dropdown__item">Search</Link>
               </li>
               <li onClick={onAddRecipe}>Add Recipe</li>
             </ul>
           )}
         </li>
-
-        <li className="navbar__item">Search</li>
-
         <Link to="/contact" className="navbar__link">
           <li className="navbar__item">Contact</li>
         </Link>
