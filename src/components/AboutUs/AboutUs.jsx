@@ -10,7 +10,7 @@ function AboutUs() {
             </p>
             <ul className="about-us__team"> 
                 <li className="about-us__team-member">
-                    <Link to="" className='about-us__team-member-contact'>Millie Houston</Link>
+                    <Link to="https://github.com/5omewhat-0f-a-l0ser" className='about-us__team-member-contact'>Millie Houston</Link>
                 </li>
             </ul>
         </section>

@@ -28,7 +28,7 @@ function Navbar({ onAddRecipe }) {
               <li>
                 <Link to="/search" className="dropdown__item">Search</Link>
               </li>
-              <li onClick={onAddRecipe}>Add Recipe</li>
+              <li className="dropdown__item"onClick={onAddRecipe}>Add Recipe</li>
             </ul>
           )}
         </li>
