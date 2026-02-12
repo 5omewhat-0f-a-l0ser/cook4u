@@ -41,7 +41,6 @@ function App() {
         setRecipes([newRecipe, ...recipes]);
         setIsSubmitting(true);
         setIsSubmissionComplete(true);
-        navigate("/my-recipes");
        closeActiveModal(); 
       })
       .catch(console.error);

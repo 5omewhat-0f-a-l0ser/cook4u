@@ -22,9 +22,6 @@ function Navbar({ onAddRecipeClick }) {
           Recipes
           {isDropdownOpen && (
             <ul className="dropdown__menu">
-              <li>
-                <Link to="/my-recipes" className="dropdown__item">My Recipes</Link>
-              </li>
               <button type="button" className="dropdown__item"onClick={onAddRecipeClick}>Add Recipe</button>
             </ul>
           )}

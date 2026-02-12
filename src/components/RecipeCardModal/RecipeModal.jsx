@@ -1,15 +1,16 @@
-import { useState, useEffect } from "react";
+//import { useState, useEffect } from "react";
 import "./RecipeModal.css";
 
-function RecipeModal({ isOpen, closeModal, card, deleteCard }) {
-  const [setNotes] = useState("");
+function RecipeModal({ isOpen, closeModal, card, }) {
+  if (!card) return null;
 
-  useEffect(() => {
-    if (card) {
-      setNotes(card.description || "");
-    }
-  }, [card]);
+  const recipeText = `
+    Ingredients:
+    ${card.ingredients.join("\n")}
 
+    Instructions:
+    ${card.instructions}
+      `;
    return (
     <div className={`modal  ${isOpen ? "modal_opened" : ""}`}>
       <div className="modal__container modal__container_type_recipe">
@@ -20,16 +21,13 @@ function RecipeModal({ isOpen, closeModal, card, deleteCard }) {
         ></button>
         <textarea
           className="modal__input_type_description"
-          defaultValue={card?.description}
+           value={recipeText}
           readOnly
         />
         <span className="modal__footer_container">
         <div className="modal__footer">
           <h2 className="modal__caption">{card?.name}</h2>
-        </div>
-          <button onClick={deleteCard} className="modal__delete">
-            Delete Item
-          </button>
+          </div>
         </span>
       </div>
     </div>
