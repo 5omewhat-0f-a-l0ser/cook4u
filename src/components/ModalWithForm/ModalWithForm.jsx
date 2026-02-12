@@ -1,20 +1,47 @@
 import './ModalWithForm.css';
 
-function ModalWithForm() {
+function ModalWithForm({
+    children,
+    activeModal,
+    closeActiveModal,
+    title,
+    buttonText,
+    onSubmit,
+    isOpen
+}) {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const name = formData.get("name");
+        const imageUrl = formData.get("imageUrl");
+        const ingredients = formData.get("ingredients");
+        onSubmit(name, imageUrl, ingredients);
+    }
+
     return (
-        <div className="modal">
-            <div className="modal__container">
-                <h2 className="modal__title">Create New Recipe</h2>
-                <button className="modal__close" type="button"></button> 
-                <form className="modal__form">
-                    <input className="modal__input" type="text" placeholder="Recipe Name" required />
-                    <textarea className="modal__input modal__input_type_description" placeholder="Ingredients and Instructions" required></textarea>
-                    <input className="modal__input" type="url" placeholder="Image URL"/>
-                    </form>
-                <button className="modal__submit" type="submit">Add Recipe</button>
-            </div>
-        </div>
-    )
+    <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
+      <div className="modal__container">
+        <h2 className="modal__title">{title}</h2>
+        <button
+          onClick={closeActiveModal}
+         
+          type="button"
+          className="modal__close"
+        ></button>
+        <form 
+          className="modal__form" 
+          onSubmit={handleSubmit}>
+          {children}
+          <button
+           type="submit" 
+           className="modal__submit"
+            >
+            {buttonText}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 }
 
 export default ModalWithForm;

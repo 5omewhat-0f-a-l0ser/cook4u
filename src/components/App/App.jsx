@@ -1,5 +1,5 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { defaultRecipes } from "../../utils/constants";
 
@@ -9,11 +9,10 @@ import Footer from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
 import AboutUs from "../AboutUs/AboutUs";
 import CreateRecipeModal from "../CreateRecipeModal/CreateModal";
-import RecipeCardModal from "../RecipeCardModal/RecipeCardModal";
-
+import RecipeModal from "../RecipeCardModal/RecipeModal";
 import "./App.css";
 //api.js stuff//
-import { addItems } from "../../utils/api";
+import { addItems, getItems } from "../../utils/api";
 
 function App() {
   //states for the app//
@@ -33,7 +32,7 @@ function App() {
     setActiveModal("");
   }
   //add-recipe functions//
-  const handleAddRecipe = () => {
+  const onAddRecipe = () => {
     setActiveModal("create-recipe");
   }
   const handleAddRecipeSubmit = (name, imageUrl, ingredients) => {
@@ -48,16 +47,25 @@ function App() {
       .catch(console.error);
   };
   //item card functions//
-   const handleRecipeCardClick = (card,) => {
+   const onRecipeCardClick = (card,) => {
     setActiveModal("preview");
     setSelectedCard(card);
   };
+
+
+  useEffect(() => {
+    getItems()
+      .then((items) => {
+        setRecipes(items.reverse());
+      })
+      .catch(console.error);
+  }, []);
 
   return (
     <div className="page">
       <Header />
       <Navbar
-        onAddRecipe={handleAddRecipe}
+        onAddRecipeClick={onAddRecipe}
       />
 
       {/* This is the part that changes by route */}
@@ -66,23 +74,23 @@ function App() {
          element={
          <Main
           recipes={recipes}
-          onRecipeCardClick={handleRecipeCardClick}
+          onRecipeCardClick={onRecipeCardClick}
          />} />
         <Route path="/contact" element={<AboutUs />} />
       </Routes>
 
       <Footer />
       <CreateRecipeModal 
-        activeModal={activeModal} 
+        activeModal={activeModal}
         closeActiveModal={closeActiveModal}
         buttonText={"Add Recipe"}
         title={"Add Recipe"}
         isOpen={activeModal === "create-recipe"}
-        onAddRecipe={handleAddRecipeSubmit}
+        onAddRecipeSubmit={handleAddRecipeSubmit}
         isSubmitting={isSubmitting}
         isSubmissionComplete={isSubmissionComplete}
       />
-      <RecipeCardModal
+      <RecipeModal
         isOpen={activeModal === "preview"}
         closeModal={closeActiveModal}
         card={selectedCard}

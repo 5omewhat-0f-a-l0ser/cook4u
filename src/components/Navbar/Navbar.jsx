@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
-function Navbar({ onAddRecipe }) {
+function Navbar({ onAddRecipeClick }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
@@ -25,10 +25,7 @@ function Navbar({ onAddRecipe }) {
               <li>
                 <Link to="/my-recipes" className="dropdown__item">My Recipes</Link>
               </li>
-              <li>
-                <Link to="/search" className="dropdown__item">Search</Link>
-              </li>
-              <li className="dropdown__item"onClick={onAddRecipe}>Add Recipe</li>
+              <button type="button" className="dropdown__item"onClick={onAddRecipeClick}>Add Recipe</button>
             </ul>
           )}
         </li>
