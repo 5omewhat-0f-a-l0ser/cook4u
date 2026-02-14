@@ -1,7 +1,5 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
-
-import { defaultRecipes } from "../../utils/constants";
 
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -12,19 +10,18 @@ import CreateRecipeModal from "../CreateRecipeModal/CreateModal";
 import RecipeModal from "../RecipeCardModal/RecipeModal";
 import "./App.css";
 //api.js stuff//
-import { addItems, getItems } from "../../utils/api";
+import { getItems, addItems,  addCardLike, removeCardLike } from "../../utils/api";
 
 function App() {
   //states for the app//
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState();
 
-  const [recipes, setRecipes] = useState(defaultRecipes); 
+  const [recipes, setRecipe] = useState([]); 
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmissionComplete, setIsSubmissionComplete] = useState(false);
 
-  const navigate = useNavigate();
 
 
   //functions for the app//
@@ -35,10 +32,10 @@ function App() {
   const onAddRecipe = () => {
     setActiveModal("create-recipe");
   }
-  const handleAddRecipeSubmit = (name, imageUrl, ingredients) => {
+  const handleAddrecipeubmit = (name, imageUrl, ingredients) => {
     addItems({ name, imageUrl, ingredients })
     .then((newRecipe) => {
-        setRecipes([newRecipe, ...recipes]);
+        setRecipe([newRecipe, ...recipes]);
         setIsSubmitting(true);
         setIsSubmissionComplete(true);
        closeActiveModal(); 
@@ -51,11 +48,29 @@ function App() {
     setSelectedCard(card);
   };
 
+  const onRecipeCardLike = ({ _id, isLiked }) => {
+     !isLiked
+      ? 
+        addCardLike(_id)
+          .then((updatedRecipe) => {
+            setRecipe((recipes) =>
+              recipes.map((item) => (item._id === _id ? updatedRecipe: item))
+            );
+          })
+          .catch((err) => console.log(err))
+      :
+        removeCardLike(_id)
+          .then((updatedRecipe) => {
+            setRecipe((recipes) =>
+              recipes.map((item) => (item._id === _id ? updatedRecipe : item))
+            );
+          })
+  };
 
   useEffect(() => {
     getItems()
       .then((items) => {
-        setRecipes(items.reverse());
+        setRecipe(items.reverse());
       })
       .catch(console.error);
   }, []);
@@ -74,6 +89,7 @@ function App() {
          <Main
           recipes={recipes}
           onRecipeCardClick={onRecipeCardClick}
+          onRecipeCardLike={onRecipeCardLike}
          />} />
         <Route path="/contact" element={<AboutUs />} />
       </Routes>
@@ -85,7 +101,7 @@ function App() {
         buttonText={"Add Recipe"}
         title={"Add Recipe"}
         isOpen={activeModal === "create-recipe"}
-        onAddRecipeSubmit={handleAddRecipeSubmit}
+        onAddrecipeubmit={handleAddrecipeubmit}
         isSubmitting={isSubmitting}
         isSubmissionComplete={isSubmissionComplete}
       />

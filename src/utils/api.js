@@ -1,67 +1,49 @@
-import {baseUrl} from "../utils/constants.js";
+import {defaultRecipes as seedRecipes} from "../utils/constants.js";
 
-function handleServerResponse(res) {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Error: ${res.status}`);
+let defaultRecipes = seedRecipes.map(recipe => ({
+  ...recipe,
+  likes: Array.isArray(recipe.likes) ? recipe.likes : [],
+}));
+const delay = (data, time = 200) => 
+  new Promise(resolve => setTimeout(() => resolve(data), time));
+
+function handleServerResponse(data) {
+  return Promise.resolve(data);
 }
 
 function getItems() {
-  return fetch(`${baseUrl}/items`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then(handleServerResponse)
-    // .then((data) => {
-    //   console.log("Data Received:", data);
-    //   return data;
-    // });
+  return delay(defaultRecipes);
 }
 
-function addItems({ name = "", imageUrl = "", ingredients = ""}, token) {
-  return fetch(`${baseUrl}/items`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,  // Also capitalized the "A"
-    },
-    body: JSON.stringify({ name, imageUrl, ingredients }),
-  }).then(handleServerResponse);
-}
+function addItems({ name = "", imageUrl = "", ingredients = ""}) {
+  const newrecipe = {
+    _id: Date.now().toString(),
+    name,
+    imageUrl,
+    ingredients,
+    likes: [],
+  };
 
-function deleteItems(_id, token) {
-  return fetch(`${baseUrl}/items/${_id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  }).then(handleServerResponse);
+  defaultRecipes = [newrecipe, ...defaultRecipes];
+    return delay(newrecipe);
 }
 
 //likes
-function addCardLike(_id, token){
-  return fetch(`${baseUrl}/items/${_id}/likes`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
-    },
-  })
-  .then(handleServerResponse);
+function addCardLike(_id) {
+  defaultRecipes = defaultRecipes.map(recipe =>
+    recipe._id === _id
+      ? { ...recipe, likes: [...recipe.likes] }
+      : recipe
+  );
+  return delay(defaultRecipes.find(recipe => recipe._id === _id));
 }
 
-
-function removeCardLike(_id, token) {
-  return fetch(`${baseUrl}/items/${_id}/likes`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
-    },
-  })
-  .then(handleServerResponse);
+function removeCardLike(_id) {
+  defaultRecipes = defaultRecipes.map(recipe =>
+    recipe._id === _id
+      ? { ...recipe, likes: [] }
+      : recipe
+  );
+  return delay(defaultRecipes.find(recipe => recipe._id === _id));
 }
-export { getItems, addItems, deleteItems, handleServerResponse,  addCardLike, removeCardLike };
+export { getItems, addItems, handleServerResponse,  addCardLike, removeCardLike };

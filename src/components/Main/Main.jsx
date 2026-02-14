@@ -2,7 +2,11 @@ import './Main.css';
 import '../Card/RecipeCard';
 import RecipeCard from '../Card/RecipeCard';
 
-function Main() {
+function Main({
+    recipes,
+    onRecipeCardClick,
+    onRecipeCardLike
+}) {
     return (
         <main>
             <section className="cards">
@@ -11,7 +15,14 @@ function Main() {
                 </p>
             </section> 
             <ul className="cards__list">
-                <RecipeCard/>
+                {recipes.map((recipe) => (
+                <RecipeCard
+                key={recipe._id}
+                recipe={recipe}
+                onRecipeCardClick={() => onRecipeCardClick(recipe)}
+                onRecipeCardLike={onRecipeCardLike}
+                />
+            ))}
             </ul>
         </main>
     )
