@@ -15,7 +15,8 @@ function ModalWithForm({
         const name = formData.get("name");
         const imageUrl = formData.get("imageUrl");
         const ingredients = formData.get("ingredients");
-        onSubmit(name, imageUrl, ingredients);
+        const instructions = formData.get("instructions");
+        onSubmit(name, imageUrl, ingredients, instructions);
     }
 
     return (

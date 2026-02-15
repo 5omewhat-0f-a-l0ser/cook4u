@@ -1,4 +1,4 @@
-//import { useState, useEffect } from "react";
+//simport { useState, useEffect } from "react";
 import "./RecipeModal.css";
 
 function RecipeModal({ isOpen, closeModal, card, }) {

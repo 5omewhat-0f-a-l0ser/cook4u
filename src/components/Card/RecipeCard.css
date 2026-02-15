@@ -37,7 +37,6 @@
   object-fit: cover;
   border-radius: 12px;
   position: relative;
-  z-index: 1;
 }
 
 .card__like{
@@ -51,7 +50,7 @@
   width: 20px;
   height: 20px;
   background-position: center;
-  z-index: 2;
+  z-index: 1;
 }
 
 

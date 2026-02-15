@@ -32,8 +32,8 @@ function App() {
   const onAddRecipe = () => {
     setActiveModal("create-recipe");
   }
-  const handleAddrecipeubmit = (name, imageUrl, ingredients) => {
-    addItems({ name, imageUrl, ingredients })
+  const handleAddRecipeSubmit = ({ name, imageUrl, ingredients, instructions }) => {
+    addItems({ name, imageUrl, ingredients, instructions  })
     .then((newRecipe) => {
         setRecipe([newRecipe, ...recipes]);
         setIsSubmitting(true);
@@ -101,7 +101,7 @@ function App() {
         buttonText={"Add Recipe"}
         title={"Add Recipe"}
         isOpen={activeModal === "create-recipe"}
-        onAddrecipeubmit={handleAddrecipeubmit}
+        onAddrecipeSubmit={handleAddRecipeSubmit}
         isSubmitting={isSubmitting}
         isSubmissionComplete={isSubmissionComplete}
       />
