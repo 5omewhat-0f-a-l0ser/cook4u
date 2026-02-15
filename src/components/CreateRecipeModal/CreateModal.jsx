@@ -1,15 +1,55 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 function CreateRecipeModal({
   isOpen,
   closeActiveModal,
   onAddRecipeSubmit,
+  isSubmitting,
+  isSubmissionComplete
 }) {
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [instructions, setInstructions] = useState("");
+ const resetForm = () => {
+    setName("");
+    setImageUrl("");
+    setIngredients("");
+    setInstructions("");
+  };
+
+  useEffect(() => {
+    if (!isOpen) {
+      resetForm();
+    }
+  }, [isOpen]);
+  useEffect(() => {
+    if (isSubmissionComplete) {
+      resetForm();
+    }
+  }, [isSubmissionComplete]);
+
+ const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleUrlChange = (e) => {
+    setImageUrl(e.target.value);
+  };
+
+  const handleIngredientsChange = (e) => {
+    setIngredients(e.target.value);
+  };
+
+  const handleInstructionsChange = (e) => {
+    setInstructions(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onAddRecipeSubmit(name, imageUrl, ingredients, instructions);
+  };
 
   return (
     <ModalWithForm
@@ -17,40 +57,34 @@ function CreateRecipeModal({
       buttonText="Create"
       isOpen={isOpen}
       closeActiveModal={closeActiveModal}
-      onSubmit={() =>
-        onAddRecipeSubmit({
-          name,
-          imageUrl,
-          ingredients,
-          instructions,
-        })
-      }
+      onSubmit={handleSubmit}
+      isSubmitting={isSubmitting}
     >
       <input
         placeholder="Recipe name"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={handleNameChange}
         required
       />
 
       <input
         placeholder="Image URL"
         value={imageUrl}
-        onChange={(e) => setImageUrl(e.target.value)}
+        onChange={handleUrlChange}
         required
       />
 
       <textarea
         placeholder="Ingredients (one per line)"
         value={ingredients}
-        onChange={(e) => setIngredients(e.target.value)}
+        onChange={handleIngredientsChange}
         required
       />
 
       <textarea
         placeholder="Instructions"
         value={instructions}
-        onChange={(e) => setInstructions(e.target.value)}
+        onChange={handleInstructionsChange}
         required
       />
     </ModalWithForm>

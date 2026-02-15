@@ -9,16 +9,6 @@ function ModalWithForm({
     onSubmit,
     isOpen
 }) {
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const name = formData.get("name");
-        const imageUrl = formData.get("imageUrl");
-        const ingredients = formData.get("ingredients");
-        const instructions = formData.get("instructions");
-        onSubmit(name, imageUrl, ingredients, instructions);
-    }
-
     return (
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
       <div className="modal__container">
@@ -31,7 +21,7 @@ function ModalWithForm({
         ></button>
         <form 
           className="modal__form" 
-          onSubmit={handleSubmit}>
+          onSubmit={onSubmit}>
           {children}
           <button
            type="submit" 

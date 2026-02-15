@@ -101,7 +101,7 @@ function App() {
         buttonText={"Add Recipe"}
         title={"Add Recipe"}
         isOpen={activeModal === "create-recipe"}
-        onAddrecipeSubmit={handleAddRecipeSubmit}
+        onAddRecipeSubmit={handleAddRecipeSubmit}
         isSubmitting={isSubmitting}
         isSubmissionComplete={isSubmissionComplete}
       />

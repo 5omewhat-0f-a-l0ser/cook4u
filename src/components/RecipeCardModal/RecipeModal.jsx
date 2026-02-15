@@ -1,7 +1,7 @@
 //simport { useState, useEffect } from "react";
 import "./RecipeModal.css";
 
-function RecipeModal({ isOpen, closeModal, card, }) {
+function RecipeModal({ recipe, isOpen, closeModal, card, }) {
   if (!card) return null;
 
   const recipeText = `
@@ -26,7 +26,7 @@ function RecipeModal({ isOpen, closeModal, card, }) {
         />
         <span className="modal__footer_container">
         <div className="modal__footer">
-          <h2 className="modal__caption">{card?.name}</h2>
+          <h2 className="modal__caption">{recipe?.name}</h2>
           </div>
         </span>
       </div>
