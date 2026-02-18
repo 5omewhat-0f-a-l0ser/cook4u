@@ -4,8 +4,7 @@ import RecipeCard from '../Card/RecipeCard';
 
 function Main({
     recipes,
-    onRecipeCardClick,
-    onRecipeCardLike
+    onRecipeCardClick
 }) {
     return (
         <main>
@@ -20,7 +19,6 @@ function Main({
                 key={recipe._id}
                 recipe={recipe}
                 onRecipeCardClick={() => onRecipeCardClick(recipe)}
-                onRecipeCardLike={onRecipeCardLike}
                 />
             ))}
             </ul>

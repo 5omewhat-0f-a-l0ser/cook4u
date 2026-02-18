@@ -10,7 +10,7 @@ import CreateRecipeModal from "../CreateRecipeModal/CreateModal";
 import RecipeModal from "../RecipeCardModal/RecipeModal";
 import "./App.css";
 //api.js stuff//
-import { getItems, addItems,  addCardLike, removeCardLike } from "../../utils/api";
+import { getItems, addItems } from "../../utils/api";
 
 function App() {
   //states for the app//
@@ -22,7 +22,7 @@ function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmissionComplete, setIsSubmissionComplete] = useState(false);
 
-
+  const [searchItem, setSearchItem] = useState("");
 
   //functions for the app//
   const closeActiveModal = () => {
@@ -33,13 +33,13 @@ function App() {
     setActiveModal("create-recipe");
   }
   const handleAddRecipeSubmit = ({ name, imageUrl, ingredients, instructions }) => {
-    addItems({ name, imageUrl, ingredients, instructions  })
+     addItems({ name, imageUrl, ingredients, instructions })
     .then((newRecipe) => {
-        setRecipe([newRecipe, ...recipes]);
-        setIsSubmitting(true);
-        setIsSubmissionComplete(true);
-       closeActiveModal(); 
-      })
+      setRecipe((prev) => [newRecipe, ...prev]);
+      setIsSubmitting();
+      setIsSubmissionComplete();
+      closeActiveModal();
+    })
       .catch(console.error);
   };
   //item card functions//
@@ -48,24 +48,7 @@ function App() {
     setSelectedCard(card);
   };
 
-  const onRecipeCardLike = ({ _id, isLiked }) => {
-     !isLiked
-      ? 
-        addCardLike(_id)
-          .then((updatedRecipe) => {
-            setRecipe((recipes) =>
-              recipes.map((item) => (item._id === _id ? updatedRecipe: item))
-            );
-          })
-          .catch((err) => console.log(err))
-      :
-        removeCardLike(_id)
-          .then((updatedRecipe) => {
-            setRecipe((recipes) =>
-              recipes.map((item) => (item._id === _id ? updatedRecipe : item))
-            );
-          })
-  };
+ 
 
   useEffect(() => {
     getItems()
@@ -75,11 +58,21 @@ function App() {
       .catch(console.error);
   }, []);
 
+  //searching function//
+  const handleSearchSubmit = () => {
+      const filteredRecipes = recipes.filter(recipe => 
+        recipe.name.toLowerCase().includes(searchItem.toLowerCase())
+      );
+      setRecipe(filteredRecipes)
+  }
+
   return (
     <div className="page">
       <Header />
       <Navbar
         onAddRecipeClick={onAddRecipe}
+        onSearch={setSearchItem}
+        onSubmit={handleSearchSubmit}
       />
 
       {/* This is the part that changes by route */}
@@ -89,7 +82,6 @@ function App() {
          <Main
           recipes={recipes}
           onRecipeCardClick={onRecipeCardClick}
-          onRecipeCardLike={onRecipeCardLike}
          />} />
         <Route path="/contact" element={<AboutUs />} />
       </Routes>

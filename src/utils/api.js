@@ -15,35 +15,18 @@ function getItems() {
   return delay(defaultRecipes);
 }
 
-function addItems({ name = "", imageUrl = "", ingredients = ""}) {
-  const newrecipe = {
+function addItems({ name = "", imageUrl = "", ingredients = "", instructions = "" }) {
+ const newrecipe = {
     _id: Date.now().toString(),
     name,
     imageUrl,
-    ingredients,
+    ingredients: ingredients.split("\n"), // 👈 normalize
+    instructions,
     likes: [],
   };
 
   defaultRecipes = [newrecipe, ...defaultRecipes];
-    return delay(newrecipe);
+  return delay(newrecipe);
 }
 
-//likes
-function addCardLike(_id) {
-  defaultRecipes = defaultRecipes.map(recipe =>
-    recipe._id === _id
-      ? { ...recipe, likes: [...recipe.likes] }
-      : recipe
-  );
-  return delay(defaultRecipes.find(recipe => recipe._id === _id));
-}
-
-function removeCardLike(_id) {
-  defaultRecipes = defaultRecipes.map(recipe =>
-    recipe._id === _id
-      ? { ...recipe, likes: [] }
-      : recipe
-  );
-  return delay(defaultRecipes.find(recipe => recipe._id === _id));
-}
-export { getItems, addItems, handleServerResponse,  addCardLike, removeCardLike };
+export { getItems, addItems, handleServerResponse };

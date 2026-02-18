@@ -6,7 +6,7 @@ function RecipeModal({ recipe, isOpen, closeModal, card, }) {
 
   const recipeText = `
     Ingredients:
-    ${card.ingredients.join("\n")}
+    ${card.ingredients}
 
     Instructions:
     ${card.instructions}

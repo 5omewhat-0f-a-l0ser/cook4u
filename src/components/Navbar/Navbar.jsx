@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
-function Navbar({ onAddRecipeClick }) {
+import SearchBar from "../SearchBar/SearchBar";
+
+function Navbar({ onAddRecipeClick, onSearch, onSubmit }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
@@ -30,6 +32,9 @@ function Navbar({ onAddRecipeClick }) {
           <li className="navbar__item">Contact</li>
         </Link>
       </ul>
+      <SearchBar
+      onSearch={onSearch}
+      onSubmit={onSubmit} />
     </nav>
   );
 }

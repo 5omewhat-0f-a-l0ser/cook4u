@@ -1,0 +1,28 @@
+.searchbar {
+    display: flex;
+    justify-content: end;
+}
+
+.searchbar__input {
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    position: relative;
+    top: -30px;
+    border-radius: 14px;
+}
+
+.searchbar__button {
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    top: -30px;
+    margin-left: 5px;
+    position: relative;
+    top: -30px;
+    border-radius: 14px;
+}

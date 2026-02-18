@@ -63,11 +63,12 @@
 
 .dropdown__item {
     padding: 0;
-    background-color: #b11313;
+    background-color: transparent;
     color: #000;
     text-decoration: none;
     white-space: nowrap;
     background: border-box;
+    border-style: none;
 }
 
 .dropdown__item:hover {
