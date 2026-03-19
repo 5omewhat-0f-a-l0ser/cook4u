@@ -17,12 +17,13 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState();
 
-  const [recipes, setRecipe] = useState([]); 
+  const [allRecipes, setAllRecipes] = useState([]);
+  const [recipes, setRecipe] = useState([]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmissionComplete, setIsSubmissionComplete] = useState(false);
 
-  const [searchItem, setSearchItem] = useState([]);
+  const [searchItem, setSearchItem] = useState("");
 
   //functions for the app//
   const closeActiveModal = () => {
@@ -52,39 +53,20 @@ function App() {
   useEffect(() => {
     getItems()
       .then((items) => {
-        setRecipe(items.reverse());
+        const revesred = items.reverse();
+        setAllRecipes(revesred);
+        setRecipe(revesred);
       })
       .catch(console.error);
   }, []);
 
   //searching function//
-  const handleSearchSubmit = () => {
-      const filteredRecipes = recipes.filter(recipe => 
-        recipe.name.toLowerCase().includes(searchItem.toLowerCase())
-      );
-      setRecipe(filteredRecipes)
-  }
-  const onSearchType = (query) => {
-      fetchMeals(query)
-        .then((data) => {
-          if (data.meals) {
-            const mealRecipes = data.meals.map(meal => ({
-              _id: meal.idMeal,
-              name: meal.strMeal,
-              imageUrl: meal.strMealThumb,
-              ingredients: Object.keys(meal)
-                .filter(key => key.startsWith('strIngredient') && meal[key])
-                .map(key => meal[key]),
-              instructions: meal.strInstructions,
-              likes: [],
-            }));
-            setRecipe(mealRecipes);
-          } else {
-            setRecipe([]);
-          }
-        })
-        .catch(console.error);
-  }
+  const handleSearchSubmit = (query) => {
+  const filteredRecipes = allRecipes.filter(recipe =>
+    recipe.name.toLowerCase().includes(query.toLowerCase())
+  );
+  setRecipe(filteredRecipes);
+};
           
           
         
