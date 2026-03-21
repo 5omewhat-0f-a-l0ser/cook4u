@@ -4,7 +4,7 @@ import "./Navbar.css";
 
 import SearchBar from "../SearchBar/SearchBar";
 
-function Navbar({ onAddRecipeClick, onSearch, onSearchType, onSubmit }) {
+function Navbar({ onAddRecipeClick, onSearch, onSubmit, suggestions }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
@@ -34,8 +34,8 @@ function Navbar({ onAddRecipeClick, onSearch, onSearchType, onSubmit }) {
       </ul>
       <SearchBar
       onSearch={onSearch}
-      onSearchType={onSearchType}
-      onSubmit={onSubmit} />
+      onSubmit={onSubmit} 
+      suggestions={suggestions}/>
     </nav>
   );
 }

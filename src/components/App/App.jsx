@@ -76,8 +76,8 @@ function App() {
       <Navbar
         onAddRecipeClick={onAddRecipe}
         onSearch={setSearchItem}
-        onSearchType={onSearchType}
         onSubmit={handleSearchSubmit}
+        suggestions={recipes}
       />
 
       {/* This is the part that changes by route */}

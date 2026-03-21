@@ -1,8 +1,7 @@
 import { useState } from "react";
 import "./SearchBar.css";
 
-function SearchBar( { onSearch, onSearchType
- }) {
+function SearchBar( { onSearch, suggestions, onSubmit }) {
     const [searchTerm, setSearchTerm] = useState("");
 
   const handleSubmit = (e) => {
@@ -18,7 +17,6 @@ function SearchBar( { onSearch, onSearchType
                 className="searchbar__input" 
                 onChange={(e) => {
                     setSearchTerm(e.target.value);
-                    onSearchType(e.target.value);
                 }}
             />
             <button 
