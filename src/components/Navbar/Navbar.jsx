@@ -38,6 +38,7 @@ function Navbar({ onAddRecipeClick, onSearch, onSubmit, suggestions }) {
       suggestions={suggestions}/>
     </nav>
   );
+  // not sure if the search works, sorry in advance//
 }
 
 export default Navbar;
