@@ -28,28 +28,32 @@ function App() {
   //functions for the app//
   const closeActiveModal = () => {
     setActiveModal("");
-  }
+  };
   //add-recipe functions//
   const onAddRecipe = () => {
     setActiveModal("create-recipe");
-  }
-  const handleAddRecipeSubmit = ({ name, imageUrl, ingredients, instructions }) => {
-     addItems({ name, imageUrl, ingredients, instructions })
-    .then((newRecipe) => {
-      setRecipe((prev) => [newRecipe, ...prev]);
-      setIsSubmitting();
-      setIsSubmissionComplete();
-      closeActiveModal();
-    })
+  };
+  const handleAddRecipeSubmit = ({
+    name,
+    imageUrl,
+    ingredients,
+    instructions,
+  }) => {
+    addItems({ name, imageUrl, ingredients, instructions })
+      .then((newRecipe) => {
+        setRecipe((prev) => [newRecipe, ...prev]);
+        setIsSubmitting();
+        setIsSubmissionComplete();
+        closeActiveModal();
+      })
       .catch(console.error);
   };
   //item card functions//
-   const onRecipeCardClick = (card,) => {
+  const onRecipeCardClick = (card) => {
     setActiveModal("preview");
     setSelectedCard(card);
   };
 
-  
   useEffect(() => {
     getItems()
       .then((items) => {
@@ -61,38 +65,59 @@ function App() {
   }, []);
 
   //searching function//
-  const handleSearchSubmit = (query) => {
-  const filteredRecipes = allRecipes.filter(recipe =>
-    recipe.name.toLowerCase().includes(query.toLowerCase())
-  );
-  setRecipe(filteredRecipes);
-};
-          
-          
-        
+  const handleSearchSubmit = async (query) => {
+    // 1. filter local recipes
+    const localResults = allRecipes.filter((recipe) =>
+      recipe.name.toLowerCase().includes(query.toLowerCase()),
+    );
+
+    try {
+      // 2. fetch API recipes
+      const data = await fetchMeals(query);
+
+      const apiResults = data.meals
+        ? data.meals.map((meal) => ({
+            id: meal.idMeal,
+            name: meal.strMeal,
+            imageUrl: meal.strMealThumb,
+            instructions: meal.strInstructions,
+          }))
+        : [];
+
+      // 3. combine both
+      setRecipe([...localResults, ...apiResults]);
+    } catch (err) {
+      console.error(err);
+      setRecipe(localResults); // fallback
+    }
+  };
+
   return (
     <div className="page">
-      <Header />
-      <Navbar
-        onAddRecipeClick={onAddRecipe}
-        onSearch={setSearchItem}
-        onSubmit={handleSearchSubmit}
-        suggestions={recipes}
-      />
+      <div className="page__content">
+        <Header />
+        <Navbar
+          onAddRecipeClick={onAddRecipe}
+          onSearch={setSearchItem}
+          onSubmit={handleSearchSubmit}
+          suggestions={allRecipes}
+          onRecipeSelect={onRecipeCardClick}
+        />
 
-      {/* This is the part that changes by route */}
-      <Routes>
-        <Route path="/"
-         element={
-         <Main
-          recipes={recipes}
-          onRecipeCardClick={onRecipeCardClick}
-         />} />
-        <Route path="/contact" element={<AboutUs />} />
-      </Routes>
+        {/* This is the part that changes by route */}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Main recipes={recipes} onRecipeCardClick={onRecipeCardClick} />
+            }
+          />
+          <Route path="/contact" element={<AboutUs />} />
+        </Routes>
 
-      <Footer />
-      <CreateRecipeModal 
+        <Footer />
+      </div>
+      <CreateRecipeModal
         activeModal={activeModal}
         closeActiveModal={closeActiveModal}
         buttonText={"Add Recipe"}

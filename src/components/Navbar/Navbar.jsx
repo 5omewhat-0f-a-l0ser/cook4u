@@ -4,7 +4,13 @@ import "./Navbar.css";
 
 import SearchBar from "../SearchBar/SearchBar";
 
-function Navbar({ onAddRecipeClick, onSearch, onSubmit, suggestions }) {
+function Navbar({
+  onAddRecipeClick,
+  onSearch,
+  onRecipeSelect,
+  onSubmit,
+  suggestions,
+}) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
@@ -19,12 +25,18 @@ function Navbar({ onAddRecipeClick, onSearch, onSubmit, suggestions }) {
           className="navbar__item dropdown"
           onMouseEnter={() => setIsDropdownOpen(true)}
           onMouseLeave={() => setIsDropdownOpen(false)}
-          onClick={() => setIsDropdownOpen(prev => !prev)}
+          onClick={() => setIsDropdownOpen((prev) => !prev)}
         >
           Recipes
           {isDropdownOpen && (
             <ul className="dropdown__menu">
-              <button type="button" className="dropdown__item"onClick={onAddRecipeClick}>Add Recipe</button>
+              <button
+                type="button"
+                className="dropdown__item"
+                onClick={onAddRecipeClick}
+              >
+                Add Recipe
+              </button>
             </ul>
           )}
         </li>
@@ -33,9 +45,11 @@ function Navbar({ onAddRecipeClick, onSearch, onSubmit, suggestions }) {
         </Link>
       </ul>
       <SearchBar
-      onSearch={onSearch}
-      onSubmit={onSubmit} 
-      suggestions={suggestions}/>
+        onSearch={onSearch}
+        onSubmit={onSubmit}
+        suggestions={suggestions}
+        onRecipeSelect={onRecipeSelect}
+      />
     </nav>
   );
   // not sure if the search works, sorry in advance//

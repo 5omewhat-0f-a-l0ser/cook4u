@@ -26,3 +26,41 @@
     top: -30px;
     border-radius: 14px;
 }
+
+.searchbar {
+  position: relative;
+}
+
+.searchbar__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 10;
+}
+
+.searchbar__dropdown-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.searchbar__dropdown-item:hover {
+  background: #eee;
+}
+
+@media screen and (max-width: 600px) {
+    .searchbar {
+        justify-content: end;
+        margin-top: 10px;
+    }
+
+    .searchbar__input {
+        top: 0;
+    }
+
+    .searchbar__button {
+        top: 0;
+    }
+}
