@@ -1,7 +1,7 @@
 //simport { useState, useEffect } from "react";
 import "./RecipeModal.css";
 
-function RecipeModal({ recipe, isOpen, closeModal, card }) {
+function RecipeModal({ recipe, isOpen, closeModal, card, onDeleteRecipe }) {
   if (!card) return null;
 
   const recipeText = `
@@ -11,6 +11,14 @@ function RecipeModal({ recipe, isOpen, closeModal, card }) {
     Instructions:
       ${card.instructions || "No instructions available"}
   `;
+const handleDelete = () => {
+  if (card) { 
+    onDeleteRecipe(card);
+    closeModal();
+  }
+};
+  
+
   return (
     <div className={`modal  ${isOpen ? "modal_opened" : ""}`}>
       <div className="modal__container modal__container_type_recipe">
@@ -28,6 +36,7 @@ function RecipeModal({ recipe, isOpen, closeModal, card }) {
           <div className="modal__footer">
             <h2 className="modal__caption">{card?.name}</h2>
           </div>
+          <button className="modal__delete" onClick={handleDelete}></button>
         </span>
       </div>
     </div>

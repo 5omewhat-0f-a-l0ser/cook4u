@@ -65,27 +65,27 @@ function App() {
   }, [allRecipes]);
 
   useEffect(() => {
-  const stored = localStorage.getItem("recipes");
-  const savedRecipes = stored ? JSON.parse(stored) : [];
+    const stored = localStorage.getItem("recipes");
+    const savedRecipes = stored ? JSON.parse(stored) : [];
 
-  getItems()
-    .then((items) => {
-      const defaultRecipes = items.reverse();
+    getItems()
+      .then((items) => {
+        const defaultRecipes = items.reverse();
 
-      // Create a Map to ensure uniqueness by Name
-      const uniqueMap = new Map();
-      
-      // Add defaults first, then let saved recipes overwrite them if names match
-      defaultRecipes.forEach(r => uniqueMap.set(r.name, r));
-      savedRecipes.forEach(r => uniqueMap.set(r.name, r));
+        // Create a Map to ensure uniqueness by Name
+        const uniqueMap = new Map();
 
-      const combined = Array.from(uniqueMap.values());
+        // Add defaults first, then let saved recipes overwrite them if names match
+        defaultRecipes.forEach((r) => uniqueMap.set(r.name, r));
+        savedRecipes.forEach((r) => uniqueMap.set(r.name, r));
 
-      setAllRecipes(combined);
-      setRecipe(combined);
-    })
-    .catch(console.error);
-}, []); 
+        const combined = Array.from(uniqueMap.values());
+
+        setAllRecipes(combined);
+        setRecipe(combined);
+      })
+      .catch(console.error);
+  }, []);
 
   useEffect(() => {
     if (!activeModal) return;
@@ -142,6 +142,20 @@ function App() {
       setRecipe(localResults);
     }
   };
+  //deleting functions
+  const handleDeleteRecipe = (recipeToDelete) => {
+    if (!recipeToDelete) return;
+
+    const recipeId = recipeToDelete._id || recipeToDelete.id;
+
+    const updatedAll = allRecipes.filter((r) => (r._id || r.id) !== recipeId);
+    const updatedRecipes = recipes.filter((r) => (r._id || r.id) !== recipeId);
+
+    setAllRecipes(updatedAll);
+    setRecipe(updatedRecipes);
+
+    closeActiveModal();
+  };
 
   return (
     <div className="page">
@@ -182,6 +196,7 @@ function App() {
         isOpen={activeModal === "preview"}
         closeModal={closeActiveModal}
         card={selectedCard}
+        onDeleteRecipe={handleDeleteRecipe}
       />
     </div>
   );

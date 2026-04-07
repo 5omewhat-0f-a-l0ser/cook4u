@@ -81,8 +81,8 @@
 .modal__input_type_description {
   height: 300px;
   resize: vertical;
-  width: 465px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 465px;
   line-height: 1.4;
 }
 .modal__submit {
@@ -112,14 +112,15 @@
   opacity: 1;
 }
 
-.modal__notes {
-  width: 100%;
-  height: 150px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px;
-  box-sizing: border-box;
-  font-size: 14px;
-  line-height: 18px;
-  resize: vertical;
+.modal__delete {
+  background-color: transparent;
+  background-image: url("./src/images/trash.png");
+  height: 50px;
+  width: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
+
