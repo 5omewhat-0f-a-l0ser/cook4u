@@ -16,7 +16,7 @@ function Main({
             <ul className="cards__list">
                 {recipes.map((recipe) => (
                 <RecipeCard
-                key={recipe._id}
+                key={recipe._id || recipe.id || recipe.name}
                 recipe={recipe}
                 onRecipeCardClick={() => onRecipeCardClick(recipe)}
                 />

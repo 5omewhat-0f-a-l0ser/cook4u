@@ -32,15 +32,15 @@
 
 
 .searchbar__dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: white;
-  border: 1px solid #ccc;
-  z-index: 10;
-  list-style: none;
-  width: 200px;
-
+    position: absolute;
+    right: 70px;
+    background: white;
+    border: 1px solid #ccc;
+    z-index: 10;
+    list-style: none;
+    width: 200px;
+    margin: 0;
+    padding: 0
 }
 
 .searchbar__dropdown-item {
@@ -56,6 +56,7 @@
     .searchbar {
         justify-content: end;
         margin-top: 10px;
+        flex-direction: column;
     }
 
     .searchbar__input {
@@ -65,4 +66,17 @@
     .searchbar__button {
         top: 0;
     }
+
+    .searchbar__dropdown {
+    position: absolute;
+    top: 100%;
+    right: 70px;
+    background: white;
+    border: 1px solid #ccc;
+    z-index: 10;
+    list-style: none;
+    width: 200px;
+    margin: 0;
+    padding: 0
+}
 }

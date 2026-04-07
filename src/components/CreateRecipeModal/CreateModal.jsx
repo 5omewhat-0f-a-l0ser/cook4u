@@ -48,7 +48,7 @@ function CreateRecipeModal({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddRecipeSubmit(name, imageUrl, ingredients, instructions);
+    onAddRecipeSubmit({name, imageUrl, ingredients, instructions});
   };
 
   return (

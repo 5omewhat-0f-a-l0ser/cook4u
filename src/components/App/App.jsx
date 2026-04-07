@@ -41,9 +41,12 @@ function App() {
   }) => {
     addItems({ name, imageUrl, ingredients, instructions })
       .then((newRecipe) => {
-        setRecipe((prev) => [newRecipe, ...prev]);
-        setIsSubmitting();
-        setIsSubmissionComplete();
+        const updated = [newRecipe, ...allRecipes];
+
+        setAllRecipes(updated);
+        setRecipe(updated);
+        setIsSubmitting(false);
+        setIsSubmissionComplete(true);
         closeActiveModal();
       })
       .catch(console.error);
@@ -55,14 +58,34 @@ function App() {
   };
 
   useEffect(() => {
-    getItems()
-      .then((items) => {
-        const revesred = items.reverse();
-        setAllRecipes(revesred);
-        setRecipe(revesred);
-      })
-      .catch(console.error);
-  }, []);
+    if (allRecipes.length === 0) return;
+
+    console.log("saving to storage!", allRecipes);
+    localStorage.setItem("recipes", JSON.stringify(allRecipes));
+  }, [allRecipes]);
+
+  useEffect(() => {
+  const stored = localStorage.getItem("recipes");
+  const savedRecipes = stored ? JSON.parse(stored) : [];
+
+  getItems()
+    .then((items) => {
+      const defaultRecipes = items.reverse();
+
+      // Create a Map to ensure uniqueness by Name
+      const uniqueMap = new Map();
+      
+      // Add defaults first, then let saved recipes overwrite them if names match
+      defaultRecipes.forEach(r => uniqueMap.set(r.name, r));
+      savedRecipes.forEach(r => uniqueMap.set(r.name, r));
+
+      const combined = Array.from(uniqueMap.values());
+
+      setAllRecipes(combined);
+      setRecipe(combined);
+    })
+    .catch(console.error);
+}, []); 
 
   useEffect(() => {
     if (!activeModal) return;
@@ -89,13 +112,29 @@ function App() {
       const data = await fetchMeals(query);
 
       const apiResults = data.meals
-        ? data.meals.map((meal) => ({
-            id: meal.idMeal,
-            name: meal.strMeal,
-            imageUrl: meal.strMealThumb,
-            instructions: meal.strInstructions,
-            source: "api",
-          }))
+        ? data.meals.map((meal) => {
+            const ingredients = [];
+
+            for (let i = 1; i <= 20; i++) {
+              const ingredient = meal[`strIngredient${i}`];
+              const measure = meal[`strMeasure${i}`];
+
+              if (ingredient && ingredient.trim()) {
+                ingredients.push(
+                  `${measure ? measure.trim() : ""} ${ingredient.trim()}`,
+                );
+              }
+            }
+
+            return {
+              id: meal.idMeal,
+              name: meal.strMeal,
+              imageUrl: meal.strMealThumb,
+              instructions: meal.strInstructions,
+              ingredients, // 🔥 THIS is what your modal needs
+              source: "api",
+            };
+          })
         : [];
       setRecipe([...localResults, ...apiResults]);
     } catch (err) {

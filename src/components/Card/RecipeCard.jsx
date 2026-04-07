@@ -12,11 +12,10 @@ function RecipeCard({
       </span>
       <img
         className="card__img"
-        src={recipe.imageUrl}
+        src={recipe.imageUrl || recipe.url || recipe.strMealThumb}
         alt={recipe.name}
-        onClick={(e) => {
-          onRecipeCardClick(e);
-        }}
+        onClick={onRecipeCardClick}
+        
       />
     </li>
     );
