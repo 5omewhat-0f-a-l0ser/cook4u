@@ -1,17 +1,17 @@
 //simport { useState, useEffect } from "react";
 import "./RecipeModal.css";
 
-function RecipeModal({ recipe, isOpen, closeModal, card, }) {
+function RecipeModal({ recipe, isOpen, closeModal, card }) {
   if (!card) return null;
 
   const recipeText = `
     Ingredients:
-    ${card.ingredients}
+      ${card.ingredients?.join("\n") || "No ingredients available"}
 
     Instructions:
-    ${card.instructions}
-      `;
-   return (
+      ${card.instructions || "No instructions available"}
+  `;
+  return (
     <div className={`modal  ${isOpen ? "modal_opened" : ""}`}>
       <div className="modal__container modal__container_type_recipe">
         <button
@@ -21,12 +21,12 @@ function RecipeModal({ recipe, isOpen, closeModal, card, }) {
         ></button>
         <textarea
           className="modal__input_type_description"
-           value={recipeText}
+          value={recipeText}
           readOnly
         />
         <span className="modal__footer_container">
-        <div className="modal__footer">
-          <h2 className="modal__caption">{recipe?.name}</h2>
+          <div className="modal__footer">
+            <h2 className="modal__caption">{card?.name}</h2>
           </div>
         </span>
       </div>

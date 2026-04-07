@@ -64,15 +64,28 @@ function App() {
       .catch(console.error);
   }, []);
 
+  useEffect(() => {
+    if (!activeModal) return;
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscClose);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]);
+
   //searching function//
   const handleSearchSubmit = async (query) => {
-    // 1. filter local recipes
     const localResults = allRecipes.filter((recipe) =>
       recipe.name.toLowerCase().includes(query.toLowerCase()),
     );
 
     try {
-      // 2. fetch API recipes
       const data = await fetchMeals(query);
 
       const apiResults = data.meals
@@ -81,14 +94,13 @@ function App() {
             name: meal.strMeal,
             imageUrl: meal.strMealThumb,
             instructions: meal.strInstructions,
+            source: "api",
           }))
         : [];
-
-      // 3. combine both
       setRecipe([...localResults, ...apiResults]);
     } catch (err) {
       console.error(err);
-      setRecipe(localResults); // fallback
+      setRecipe(localResults);
     }
   };
 
@@ -100,7 +112,7 @@ function App() {
           onAddRecipeClick={onAddRecipe}
           onSearch={setSearchItem}
           onSubmit={handleSearchSubmit}
-          suggestions={allRecipes}
+          suggestions={recipes}
           onRecipeSelect={onRecipeCardClick}
         />
 
