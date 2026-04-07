@@ -48,7 +48,7 @@
 }
 
 .modal__close {
-  background-image: url('./src/images/close.png');
+  background-image: url('../../images/close.png');
   background-repeat: no-repeat;
   background-color: transparent;
   background-size: contain;
@@ -114,7 +114,7 @@
 
 .modal__delete {
   background-color: transparent;
-  background-image: url("./src/images/trash.png");
+  background-image: url("../../images/trash.png");
   height: 50px;
   width: 50px;
   background-size: contain;
