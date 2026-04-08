@@ -9,3 +9,5 @@ This app was created using React+Vite. There should be a thrid-party API from Th
 To Deploy:
 
 Link: https://5omewhat-0f-a-l0ser.github.io/cook4u/
+
+Pitch video: https://youtu.be/T_3_lm-SsAQ 
